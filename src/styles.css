@@ -21,8 +21,9 @@ body{
 
 /* HERO */
 .hero{text-align:center;padding:52px 0 30px}
-.mandala{width:190px;height:190px;margin:0 auto 6px;position:relative}
+.mandala{width:212px;height:212px;margin:0 auto 6px;position:relative}
 .mandala svg{width:100%;height:100%;display:block}
+.ganesha{filter:drop-shadow(0 0 5px rgba(255,182,46,.45))}
 .rays{transform-origin:50% 50%;animation:spin 60s linear infinite}
 .om{font-family:'Marcellus',serif;font-size:76px;fill:var(--gold);filter:drop-shadow(0 0 14px rgba(255,182,46,.75))}
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -103,6 +104,53 @@ h1 .glow{color:var(--gold);text-shadow:0 0 26px rgba(244,205,106,.55)}
 .note-save:disabled{opacity:.5;cursor:default}
 .note-view{margin-top:10px;font-size:.85rem;color:var(--cream);background:rgba(244,205,106,.08);border:1px solid rgba(244,205,106,.18);border-radius:10px;padding:8px 11px;display:flex;gap:8px;align-items:flex-start;line-height:1.45}
 .note-icon{opacity:.85;flex-shrink:0}
+
+/* PRASAD SEVA */
+.prasad{margin-top:46px}
+.prasad-title{text-align:center;margin-bottom:22px}
+.prasad-om{font-family:'Marcellus',serif;font-size:1.6rem;color:var(--gold);text-shadow:0 0 14px rgba(244,205,106,.5)}
+.prasad-title h2{font-family:'Marcellus',serif;font-weight:400;font-size:clamp(1.6rem,4vw,2.2rem);color:var(--cream);margin:2px 0 4px}
+.prasad-title p{font-size:.88rem;color:var(--cream-dim)}
+.prasad-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+.pday{border-radius:var(--radius);background:var(--card);border:1px solid var(--card-line);padding:14px 15px 16px;overflow:hidden}
+.pday-head{display:flex;align-items:baseline;gap:8px;padding-bottom:10px;margin-bottom:6px;border-bottom:1px solid var(--card-line)}
+.pday-date{font-family:'Marcellus',serif;font-size:1.15rem;color:var(--gold)}
+.pday-dow{font-size:.75rem;letter-spacing:.12em;color:var(--cream-dim);text-transform:uppercase}
+.pslot{margin-top:12px}
+.pslot-head{display:flex;align-items:center;gap:7px;font-size:.8rem;letter-spacing:.06em;color:var(--marigold);margin-bottom:8px}
+.pslot-icon{font-size:.95rem}
+.pnames{display:flex;flex-wrap:wrap;gap:6px;min-height:20px}
+.pnone{color:var(--cream-dim);opacity:.6;font-size:.85rem}
+.pchip{display:inline-flex;align-items:center;gap:6px;font-size:.82rem;color:var(--cream);background:rgba(255,182,46,.10);border:1px solid rgba(255,182,46,.25);border-radius:999px;padding:3px 10px}
+.pchip-x{cursor:pointer;border:none;background:transparent;color:var(--vermillion);font-size:1rem;line-height:1;padding:0;margin:0;font-family:inherit}
+.pchip-x:hover{color:#ff7a6e}
+.padd{display:flex;gap:6px;margin-top:9px}
+.padd input{flex:1;min-width:0;padding:7px 10px;border-radius:9px;font-family:inherit;font-size:.82rem;background:rgba(255,240,214,.05);border:1px solid var(--card-line);color:var(--cream);outline:none}
+.padd input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(244,205,106,.15)}
+.padd input::placeholder{color:var(--cream-dim)}
+.padd button{cursor:pointer;font-family:inherit;font-size:.8rem;padding:7px 13px;border-radius:9px;border:1px solid transparent;background:linear-gradient(180deg,var(--marigold),var(--saffron));color:#3a0d15;font-weight:700;transition:.15s}
+.padd button:disabled{opacity:.5;cursor:default;background:rgba(255,240,214,.06);color:var(--cream-dim)}
+
+/* CONTACTS */
+.contacts{margin-top:46px}
+.csearch{max-width:360px;margin:0 auto 18px}
+.csearch input{width:100%;padding:11px 14px;border-radius:12px;font-family:inherit;font-size:.95rem;background:rgba(255,240,214,.05);border:1px solid var(--card-line);color:var(--cream);outline:none;text-align:center}
+.csearch input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(244,205,106,.15)}
+.csearch input::placeholder{color:var(--cream-dim)}
+.contacts-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.ccard{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;background:var(--card);border:1px solid var(--card-line);transition:border-color .18s ease}
+.ccard:hover{border-color:var(--gold-deep)}
+.ccard .av{width:40px;height:40px;border-radius:50%;flex-shrink:0;display:grid;place-items:center;font-weight:700;font-size:.9rem;color:#3a0d15;background:linear-gradient(135deg,var(--marigold),var(--gold))}
+.cinfo{flex:1;min-width:0}
+.cname{font-family:'Marcellus',serif;font-size:1.05rem;color:var(--cream);line-height:1.2}
+.cnum{font-size:.92rem;color:var(--gold);text-decoration:none}
+.cnum:hover{text-decoration:underline}
+.cnum.none{color:var(--cream-dim);opacity:.7;font-size:.82rem}
+.cbtns{display:flex;gap:6px;flex-shrink:0}
+.cbtn{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;text-decoration:none;font-size:1rem;border:1px solid var(--card-line);background:rgba(255,240,214,.04)}
+.cbtn.call{background:rgba(255,182,46,.12);border-color:rgba(255,182,46,.3)}
+.cbtn.wa{background:rgba(57,160,107,.14);border-color:rgba(57,160,107,.35)}
+.cbtn:hover{filter:brightness(1.15)}
 .empty-state{text-align:center;padding:50px 20px;color:var(--cream-dim);grid-column:1/-1}
 footer{text-align:center;margin-top:46px;color:var(--cream-dim);font-size:.82rem;line-height:1.7}
 footer .sync{display:inline-flex;align-items:center;gap:7px;color:var(--gold)}

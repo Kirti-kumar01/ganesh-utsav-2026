@@ -4,12 +4,16 @@ import Petals from './components/Petals.jsx';
 import Hero from './components/Hero.jsx';
 import Toolbar from './components/Toolbar.jsx';
 import TaskCard from './components/TaskCard.jsx';
+import PrasadBoard from './components/PrasadBoard.jsx';
+import Contacts from './components/Contacts.jsx';
 import LoginModal from './components/LoginModal.jsx';
 
 export default function App() {
   const [tasks, setTasks] = useState([]);
   const [status, setStatus] = useState({});
   const [comments, setComments] = useState({});
+  const [prasadDays, setPrasadDays] = useState([]);
+  const [prasad, setPrasad] = useState({});
   const [isAdmin, setIsAdmin] = useState(!!api.getToken());
   const [filters, setFilters] = useState({ status: 'all', day: 'all', q: '' });
   const [showLogin, setShowLogin] = useState(false);
@@ -20,8 +24,9 @@ export default function App() {
   useEffect(() => {
     api
       .fetchTasks()
-      .then(({ tasks, status, comments }) => {
+      .then(({ tasks, status, comments, prasadDays, prasad }) => {
         setTasks(tasks); setStatus(status); setComments(comments || {});
+        setPrasadDays(prasadDays || []); setPrasad(prasad || {});
       })
       .catch(() => setError('Could not reach the server. Is the backend running?'));
   }, []);
@@ -31,12 +36,15 @@ export default function App() {
     if (isAdmin) { clearInterval(pollRef.current); return; }
     pollRef.current = setInterval(async () => {
       try {
-        const { status, comments } = await api.fetchState();
+        const { status, comments, prasad } = await api.fetchState();
         setStatus((prev) =>
           JSON.stringify(prev) === JSON.stringify(status) ? prev : status
         );
         setComments((prev) =>
           JSON.stringify(prev) === JSON.stringify(comments || {}) ? prev : (comments || {})
+        );
+        setPrasad((prev) =>
+          JSON.stringify(prev) === JSON.stringify(prasad || {}) ? prev : (prasad || {})
         );
       } catch { /* ignore transient errors */ }
     }, 15000);
@@ -77,6 +85,24 @@ export default function App() {
       if (e.message === 'Session expired') { setIsAdmin(false); setShowLogin(true); }
     }
   }, [isAdmin, comments]);
+
+  const savePrasad = useCallback(async (dayId, slot, names) => {
+    if (!isAdmin) return;
+    const prev = prasad[dayId]?.[slot] || [];
+    setPrasad((p) => ({
+      ...p,
+      [dayId]: { morning: [], evening: [], ...(p[dayId] || {}), [slot]: names },
+    })); // optimistic
+    try {
+      await api.updatePrasad(dayId, slot, names);
+    } catch (e) {
+      setPrasad((p) => ({
+        ...p,
+        [dayId]: { morning: [], evening: [], ...(p[dayId] || {}), [slot]: prev },
+      })); // rollback
+      if (e.message === 'Session expired') { setIsAdmin(false); setShowLogin(true); }
+    }
+  }, [isAdmin, prasad]);
 
   // Derived counts
   const counts = tasks.reduce(
@@ -146,6 +172,10 @@ export default function App() {
             ))
           )}
         </main>
+
+        <PrasadBoard days={prasadDays} prasad={prasad} isAdmin={isAdmin} onSave={savePrasad} />
+
+        <Contacts />
 
         <footer>
           <div className="sync">
